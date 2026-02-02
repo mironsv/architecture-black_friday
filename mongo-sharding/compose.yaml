@@ -11,7 +11,7 @@ services:
       app-network:
         ipv4_address: 173.17.0.10
     volumes:
-      - configSvr-data:/data/db
+      - configSvr_data:/data/db
     command: > # запуск в режиме конфигурации
       --configsvr
       --replSet config_server
@@ -102,7 +102,7 @@ services:
 
 
 volumes:
-  configSvr-data:
+  configSvr_data:
   mongodb1_data:
   mongodb2_data:
 
