@@ -13,7 +13,7 @@
         <mxCell id="Qa-HA6JoMCmA_kkPiF_G-7" edge="1" parent="1" source="zA23MoTUsTF4_91t8viU-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Qa-HA6JoMCmA_kkPiF_G-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="zA23MoTUsTF4_91t8viU-2" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;configdb:&lt;br&gt;mongos_router&lt;/div&gt;" vertex="1">
+        <mxCell id="zA23MoTUsTF4_91t8viU-2" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;configdb:&lt;br&gt;mongosRouter&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="100" x="450" y="280" as="geometry" />
         </mxCell>
         <mxCell id="zA23MoTUsTF4_91t8viU-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="pymongo-api" vertex="1">
@@ -22,13 +22,13 @@
         <mxCell id="zA23MoTUsTF4_91t8viU-4" edge="1" parent="1" source="zA23MoTUsTF4_91t8viU-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="zA23MoTUsTF4_91t8viU-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Qa-HA6JoMCmA_kkPiF_G-1" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;shardsvr&lt;/span&gt;:&lt;/div&gt;&lt;div&gt;shard2&lt;/div&gt;" vertex="1">
+        <mxCell id="Qa-HA6JoMCmA_kkPiF_G-1" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;shardsvr&lt;/span&gt;:&lt;/div&gt;&lt;div&gt;mongodb2&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="60" x="640" y="334" as="geometry" />
         </mxCell>
-        <mxCell id="Qa-HA6JoMCmA_kkPiF_G-4" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;shardsvr:&lt;/div&gt;&lt;div&gt;shard1&lt;/div&gt;" vertex="1">
+        <mxCell id="Qa-HA6JoMCmA_kkPiF_G-4" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;shardsvr:&lt;/div&gt;&lt;div&gt;mongodb1&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="60" x="640" y="234" as="geometry" />
         </mxCell>
-        <mxCell id="Qa-HA6JoMCmA_kkPiF_G-5" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;config_server:&lt;br&gt;configSrv&lt;/div&gt;" vertex="1">
+        <mxCell id="Qa-HA6JoMCmA_kkPiF_G-5" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;div&gt;config_server:&lt;br&gt;configSvr&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="80" x="460" y="400" as="geometry" />
         </mxCell>
         <mxCell id="Qa-HA6JoMCmA_kkPiF_G-8" edge="1" parent="1" source="zA23MoTUsTF4_91t8viU-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="Qa-HA6JoMCmA_kkPiF_G-5">
