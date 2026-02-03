@@ -39,7 +39,7 @@ run_mongo_eval() {
 
 # Проверка репликации (использует контейнерный клиент)
 check_replication() {
-  run_mongo_eval configSvr 27017 "try{rs.status()}catch(e){print(e);}"
+  run_mongo_eval configsvr1 27017 "try{rs.status()}catch(e){print(e);}"
   run_mongo_eval mongodb1-1 27021 "try{rs.status()}catch(e){print(e);}"
   run_mongo_eval mongodb2-1 27024 "try{rs.status()}catch(e){print(e);}"
 }
@@ -49,7 +49,9 @@ $COMPOSE_CMD up -d
 $COMPOSE_CMD ps
 
 # Wait for mongod instances
-wait_for_service configSvr 27017
+wait_for_service configsvr1 27017
+wait_for_service configsvr2 27017
+wait_for_service configsvr3 27017
 wait_for_service mongodb1-1 27021
 wait_for_service mongodb1-2 27022
 wait_for_service mongodb1-3 27023
@@ -60,12 +62,16 @@ wait_for_service mongosRouter 27020
 
 # 2) Init config server replica set (idempotent)
 info "Инициализация config server..."
-if [ "$(run_mongo_eval configSvr 27017 "try{rs.status().ok}catch(e){0}")" != "1" ]; then
-  $COMPOSE_CMD exec -T configSvr mongosh --port 27017 <<'EOF'
+if [ "$(run_mongo_eval configsvr1 27017 "try{rs.status().ok}catch(e){0}")" != "1" ]; then
+  $COMPOSE_CMD exec -T configsvr1 mongosh --port 27017 <<'EOF'
 rs.initiate({
-  _id: "config_server",
+  _id: "configReplSet",
   configsvr: true,
-  members: [{ _id: 0, host: "configSvr:27017" }]
+  members: [
+    { _id: 0, host: "configsvr1:27017" },
+    { _id: 1, host: "configsvr2:27017" },
+    { _id: 2, host: "configsvr3:27017" }
+  ]
 })
 rs.status().ok
 EOF
