@@ -1,0 +1,119 @@
+name: mongo-sharding
+
+services:
+  configSvr:
+    container_name: configSvr
+    image: dh-mirror.gitverse.ru/mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.10
+    volumes:
+      - configSvr_data:/data/db
+    command: > # запуск в режиме конфигурации
+      --configsvr
+      --replSet config_server
+      --bind_ip_all
+      --port 27017
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  mongodb1:
+    container_name: mongodb1
+    image: dh-mirror.gitverse.ru/mongo:latest
+    volumes:
+      - mongodb1_data:/data/db
+    restart: always
+    ports:
+      - "27018:27018"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.9
+    command: > # запуск в режиме шардинга
+      --shardsvr
+      --replSet shard1
+      --bind_ip_all
+      --port 27018
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  mongodb2:
+    container_name: mongodb2
+    image: dh-mirror.gitverse.ru/mongo:latest
+    volumes:
+      - mongodb2_data:/data/db
+    restart: always
+    ports:
+      - "27019:27019"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.8
+    command: > # запуск в режиме шардинга
+      --shardsvr
+      --replSet shard2
+      --bind_ip_all
+      --port 27019
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  # роутер
+  mongosRouter:
+    image: dh-mirror.gitverse.ru/mongo:latest
+    container_name: mongosRouter
+    restart: always
+    depends_on:
+      - configSvr
+      - mongodb1
+      - mongodb2
+    ports:
+      - "27020:27020"
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.7
+    command: > # в режиме роутера, передача данных сервера конфигурации
+      mongos  --configdb config_server/configSvr:27017
+              --bind_ip_all
+              --port 27020
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 5s
+      start_period: 10s
+
+  pymongo_api:
+    container_name: pymongo_api
+    build: 
+      context: api_app
+      dockerfile: Dockerfile
+    depends_on:
+      - mongosRouter
+    ports:
+      - 8080:8080
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.2
+    environment:
+      MONGODB_URL: "mongodb://mongosRouter:27020"
+      MONGODB_DATABASE_NAME: "somedb"
+
+
+volumes:
+  configSvr_data:
+  mongodb1_data:
+  mongodb2_data:
+
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.17.0.0/16
